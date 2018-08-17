@@ -5,13 +5,15 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace Sales
 {
-	public partial class App : Application
+    using Sales.Views;
+
+    public partial class App : Application
 	{
 		public App ()
 		{
 			InitializeComponent();
 
-			MainPage = new MainPage();
+			MainPage = new NavigationPage(new ProductsPage());
 		}
 
 		protected override void OnStart ()
