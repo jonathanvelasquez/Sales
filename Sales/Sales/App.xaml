@@ -7,7 +7,11 @@
         <ResourceDictionary>
             <!--locator-->
             <infra:InstaceLocator x:Key="Locator"/>
-            
+
+            <!--Parameters-->
+            <x:String x:Key="UrlAPI">http://salesapiservices.azurewebsites.net</x:String>
+            <x:String x:Key="UrPrefix">/api</x:String>
+            <x:String x:Key="UrlProductsController">/Products</x:String>
         </ResourceDictionary> 
 	</Application.Resources>
 </Application>
