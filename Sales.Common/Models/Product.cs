@@ -27,5 +27,18 @@
         [Display(Name = "Publish On")]
         [DataType(DataType.Date)]
         public DateTime PublishOn { get; set; }
+
+        public string ImageFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ImagePath))
+                {
+                    return "notProduct";
+                }
+
+                return $"Https://salesbackend.azurewebsites.net/{ImagePath.Substring(1)}";
+            }
+        }
     }
 }
