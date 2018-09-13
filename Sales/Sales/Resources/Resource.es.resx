@@ -132,4 +132,34 @@
   <data name="Products" xml:space="preserve">
     <value>Productos</value>
   </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>¡Agregar producto!</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="DescriptionPlaceHolder" xml:space="preserve">
+    <value>Por favor introduzca la descripción del producto</value>
+  </data>
+  <data name="PricePlaceHolder" xml:space="preserve">
+    <value>Ingrese precio del producto</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Precio</value>
+  </data>
+  <data name="Remarks" xml:space="preserve">
+    <value>Observaciones</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="ChangeImage" xml:space="preserve">
+    <value>Toca la imagen para cambiarla.</value>
+  </data>
+  <data name="DescriptionError" xml:space="preserve">
+    <value>Debe escribir una descripción</value>
+  </data>
+  <data name="Price Error" xml:space="preserve">
+    <value>Debe ingresar un precio mayor que cero.</value>
+  </data>
 </root>

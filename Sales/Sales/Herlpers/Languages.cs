@@ -13,6 +13,56 @@
             DependencyService.Get<ILocalize>().SetLocale(ci);
         }
 
+        public static string Price_Error
+        {
+            get { return Resource.Price_Error; }
+        }
+
+        public static string DescriptionError
+        {
+            get { return Resource.DescriptionError; }
+        }
+
+        public static string ChangeImage
+        {
+            get { return Resource.ChangeImage; }
+        }
+
+        public static string Remarks
+        {
+            get { return Resource.Remarks; }
+        }
+
+        public static string Save
+        {
+            get { return Resource.Save; }
+        }
+
+        public static string DescriptionPlaceHolder
+        {
+            get { return Resource.DescriptionPlaceHolder; }
+        }
+
+        public static string PricePlaceHolder
+        {
+            get { return Resource.PricePlaceHolder; }
+        }
+
+        public static string Price
+        {
+            get { return Resource.Price; }
+        }
+
+        public static string Description
+        {
+            get { return Resource.Description; }
+        }
+
+        public static string AddProduct
+        {
+            get { return Resource.AddProduct; }
+        }
+
         public static string Accept
         {
             get { return Resource.Accept; }

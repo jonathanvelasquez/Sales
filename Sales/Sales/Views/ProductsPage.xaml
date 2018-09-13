@@ -6,6 +6,12 @@
     xmlns:i18n="clr-namespace:Sales.Herlpers"
     BindingContext="{Binding Main, Source={StaticResource Locator}}"
     Title="{i18n:Translate Products}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Icon="add"
+            Command="{Binding AddProdCommand}">            
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout
             BindingContext="{Binding Products}"
@@ -30,12 +36,18 @@
                                     Source="{Binding ImageFullPath}"
                                     WidthRequest="100">                                    
                                 </Image>
-                                <Label
+                                <StackLayout
                                     Grid.Column="1"
-                                    Text="{Binding Description}"
-                                    FontAttributes="Bold"
-                                    VerticalOptions="Center">                                    
-                                </Label>
+                                    VerticalOptions="Center">
+                                    <Label                                    
+                                        Text="{Binding Description}"
+                                        FontAttributes="Bold">
+                                    </Label>
+                                    <Label                                    
+                                        Text="{Binding Remarks}"
+                                        FontAttributes="Bold">
+                                    </Label>
+                                </StackLayout>                                
                                 <Label
                                     Grid.Column="2"
                                     HorizontalOptions="End"
