@@ -13,6 +13,26 @@
             DependencyService.Get<ILocalize>().SetLocale(ci);
         }
 
+        public static string ImageSource
+        {
+            get { return Resource.ImageSource; }
+        }
+
+        public static string FromGallery
+        {
+            get { return Resource.FromGallery; }
+        }
+
+        public static string NewPicture
+        {
+            get { return Resource.NewPicture; }
+        }
+
+        public static string Cancel
+        {
+            get { return Resource.Cancel; }
+        }  
+
         public static string Price_Error
         {
             get { return Resource.Price_Error; }

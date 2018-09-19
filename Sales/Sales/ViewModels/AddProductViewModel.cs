@@ -2,14 +2,21 @@
 {
     using GalaSoft.MvvmLight.Command;
     using Herlpers;
+    using Plugin.Media;
+    using Plugin.Media.Abstractions;
     using Sales.Common.Models;
     using Sales.Services;
+    using System.Linq;
     using System.Windows.Input;
     using Xamarin.Forms;
 
     public class AddProductViewModel : BaseViewModel
     {
         #region Attributes
+
+        private MediaFile file;
+
+        private ImageSource imageSource;
 
         private bool isRunning;
 
@@ -39,6 +46,12 @@
             set { SetValue(ref isEnabled, value); }
         }
 
+        public ImageSource ImageSource
+        {
+            get { return imageSource; }
+            set { SetValue(ref imageSource, value); }
+        }
+
         #endregion
 
         #region Constructor
@@ -47,11 +60,64 @@
         {
             IsEnabled = true;
             apiService = new ApiService();
+            imageSource = "notProduct";
         }
 
         #endregion
 
         #region Commands
+
+        public ICommand ChangeImageCommand
+        {
+            get
+            {
+                return new RelayCommand(ChangeImage);
+            }
+        }
+
+        private async void ChangeImage()
+        {
+
+            await CrossMedia.Current.Initialize();
+
+            var source = await Application.Current.MainPage.DisplayActionSheet(
+                Languages.ImageSource,
+                Languages.Cancel,
+                null,
+                Languages.FromGallery,
+                Languages.NewPicture);
+
+            if (source == Languages.Cancel)
+            {
+                file = null;
+                return;
+            }
+
+            if (source == Languages.NewPicture)
+            {
+                file = await CrossMedia.Current.TakePhotoAsync(
+                    new StoreCameraMediaOptions
+                    {
+                        Directory = "Sample",
+                        Name = "test.jpg",
+                        PhotoSize = PhotoSize.Small,
+                    }
+                );
+            }
+            else
+            {
+                file = await CrossMedia.Current.PickPhotoAsync();
+            }
+
+            if (file != null)
+            {
+                ImageSource = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    return stream;
+                });
+            }
+        }
 
         public ICommand SaveCommand
         {
@@ -106,11 +172,19 @@
                 return;
             }
 
+            byte[] imageArray = null;
+            if (file != null)
+            {
+                imageArray = FilesHelper.ReadFully(file.GetStream());
+            }
+
+
             var product = new Product
             {
                 Description = Description,
                 Price = price,
-                Remarks = Remarks
+                Remarks = Remarks,
+                ImageArray = imageArray
             };
 
             var url = Application.Current.Resources["UrlAPI"].ToString();
@@ -129,6 +203,9 @@
                 return;
             }
 
+            var newProduct = (Product)response.Result;
+            var viewModel = ProductsViewModel.GetInstce();
+            viewModel.Products.Add(newProduct);
             IsRunning = false;
             IsEnabled = true;
 
