@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Plugin.Media.Abstractions;
@@ -14,10 +15,13 @@
     public class ProductsViewModel : BaseViewModel
     {
         #region Attributes
+
         private ApiService apiService;
 
         private bool isRefreshing;
-       
+
+        private ObservableCollection<productItemViewModel> products;
+
         #endregion
 
         #region Properties
@@ -25,11 +29,9 @@
         {
             get { return isRefreshing; }
             set { SetValue(ref isRefreshing, value); }
-        }
+        }       
 
-        private ObservableCollection<Product> products;
-
-        public ObservableCollection<Product> Products
+        public ObservableCollection<productItemViewModel> Products
         {
             get { return products; }
             set { SetValue(ref this.products, value); }
@@ -37,6 +39,7 @@
         #endregion
 
         #region Constructor
+
         public ProductsViewModel()
         {
             instance = this;
@@ -46,6 +49,7 @@
         #endregion
 
         #region Sigleton
+
         private static ProductsViewModel instance;
 
         public static ProductsViewModel GetInstce()
@@ -59,6 +63,16 @@
         }
 
 
+        #endregion        
+
+        #region Commands
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return new RelayCommand(LoadProducts);
+            }
+        }
         #endregion
 
         #region Methods
@@ -91,21 +105,22 @@
             }
 
             var list = (List<Product>)response.Result;
-            Products = new ObservableCollection<Product>(list);
+            var MyList = list.Select(p => new productItemViewModel
+            {
+                Description = p.Description,
+                ImageArray = p.ImageArray,
+                ImagePath = p.ImagePath,
+                IsAvailable = p.IsAvailable,
+                Price = p.Price,
+                ProductId = p.ProductId,
+                PublishOn = p.PublishOn,
+                Remarks = p.Remarks,
+            });
+            Products = new ObservableCollection<productItemViewModel>(MyList);
             IsRefreshing = false;
         }
         #endregion
 
-        #region Commands
-        public ICommand RefreshCommand
-        {
-            get
-            {
-                return new RelayCommand(LoadProducts);
-            }
-        }
-        #endregion
 
-        
     }
 }
